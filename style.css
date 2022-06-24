@@ -254,3 +254,11 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 html {
   scroll-behavior: smooth;
 }
+body::-webkit-scrollbar {
+  width: 11px;             /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: grey;    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+}
