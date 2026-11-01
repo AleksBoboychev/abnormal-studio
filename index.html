@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abnormal Studio — UE5+ Assets & Custom Development</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23ffffff' stroke-width='8' stroke-linecap='round' stroke-linejoin='round'><polygon points='50,15 88,82 12,82'/><line x1='10' y1='40' x2='88' y2='82'/></svg>">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #000000;
+      --card-bg: #09090b;
+      --card-bg-hover: #111115;
+      --border: #222226;
+      --border-hover: #44444c;
+      --text-main: #ffffff;
+      --text-muted: #8e8e93;
+      --accent: #ffffff;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header & Nav */
+    header {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: border-color 0.3s ease;
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.5px;
+      transition: transform 0.3s ease;
+    }
+
+    .brand:hover {
+      transform: scale(1.02);
+    }
+
+    .logo-svg {
+      width: 28px;
+      height: 28px;
+      transition: transform 0.4s ease;
+    }
+
+    .brand:hover .logo-svg {
+      transform: rotate(180deg);
+    }
+
+    nav ul {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s ease, transform 0.2s ease;
+      display: inline-block;
+    }
+
+    nav a:hover {
+      color: var(--text-main);
+      transform: translateY(-1px);
+    }
+
+    /* Hero Section Keyframes & Animations */
+    .hero {
+      padding: 80px 0 56px;
+      text-align: center;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      animation: fadeInUp 0.6s ease 0.15s forwards;
+      opacity: 0;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto 36px;
+      font-weight: 400;
+      animation: fadeInUp 0.6s ease 0.3s forwards;
+      opacity: 0;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease 0.45s forwards;
+      opacity: 0;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 26px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000000;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-main);
+      border-color: var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--border-hover);
+      background: #111115;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary:active {
+      transform: translateY(0);
+    }
+
+    /* Filters */
+    .filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      color: var(--text-main);
+      border-color: var(--text-main);
+      background: #111115;
+    }
+
+    /* Main Grid & Cards */
+    .section-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      font-size: 0.95rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .card.hide-card {
+      opacity: 0;
+      transform: scale(0.95);
+      pointer-events: none;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      background: var(--card-bg-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+    }
+
+    .card-media {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #141418;
+      overflow: hidden;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .card:hover .card-media img {
+      transform: scale(1.05);
+    }
+
+    .card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .card-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .card-price {
+      font-family: var(--font-mono);
+      font-size: 1.35rem;
+      font-weight: 500;
+      margin: 16px 0;
+    }
+
+    .card-features {
+      list-style: none;
+      margin-bottom: 24px;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+
+    .card-features li {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-features li::before {
+      content: "—";
+      color: var(--text-main);
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .card-actions .btn {
+      flex: 1;
+      padding: 10px 14px;
+      font-size: 0.85rem;
+    }
+
+    /* Custom Asset Section */
+    .custom-build-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 44px;
+      margin-bottom: 80px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      transition: border-color 0.3s ease;
+    }
+
+    .custom-build-box:hover {
+      border-color: var(--border-hover);
+    }
+
+    .custom-header {
+      margin-bottom: 32px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.85rem;
+      color: var(--text-main);
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+
+    input, select, textarea {
+      background: #000000;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #ffffff;
+      box-shadow: 0 0 0 1px #ffffff;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #44444c;
+    }
+
+    /* Modals with Pop Animation */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      padding: 24px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 36px;
+      max-width: 520px;
+      width: 100%;
+      position: relative;
+      transform: scale(0.92) translateY(12px);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-overlay.active .modal {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .modal-close:hover {
+      color: var(--text-main);
+      transform: scale(1.1);
+    }
+
+    /* Comparison Section */
+    .comparison-section {
+      border-top: 1px solid var(--border);
+      padding-top: 64px;
+      margin-bottom: 80px;
+    }
+
+    .comp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    .comp-card {
+      padding: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #050507;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .comp-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .comp-card h4 {
+      margin-bottom: 16px;
+      font-size: 1rem;
+    }
+
+    .comp-card ul {
+      list-style: none;
+    }
+
+    .comp-card li {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding-top: 40px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* Scroll Reveal Initial States */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fab-link {
+        color: #ffffff !important;
+        text-decoration: none;
+        display: inline-block;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .fab-link:hover,
+      .fab-link:visited,
+      .fab-link:active {
+        color: #ffffff !important;
+      }
+
+      .fab-link:hover {
+        transform: rotate(360deg);
+  }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <div class="container nav-inner">
+      <a href="#" class="brand">
+        <svg class="logo-svg" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="50,15 88,82 12,82" />
+          <line x1="10" y1="40" x2="88" y2="82" />
+        </svg>
+        Abnormal Studio
+      </a>
+      <nav>
+        <ul>
+          <li><a href="#assets">Assets</a></li>
+          <li><a href="#custom">Custom Assest</a></li>
+          <li><a href="#advice">Advisory Call</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="tag">Making assests Unreal Engine 5+</div>
+      <h1>UE5+ Assets & Custom Development</h1>
+      <p>Modular prop packs, blueprint frameworks, and custom asset builds designed to help indie game developers launch faster without losing momentum.</p>
+      <div class="hero-buttons">
+        <a href="#custom" class="btn btn-primary">Request Custom Asset</a>
+        <a href="#assets" class="btn btn-secondary">Browse Store Assets</a>
+      </div>
+    </section>
+
+    <!-- Marketplace Catalog Section -->
+    <section id="assets" class="reveal">
+      <h2 class="section-title">Ready-Made Assets</h2>
+      <p class="section-desc">Modular packages, full frameworks, and asset bundles optimized for UE5+.</p>
+
+      <!-- Category Filter -->
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterAssets('all', this)">All Assets</button>
+        <button class="filter-btn" onclick="filterAssets('system', this)">Game Systems</button>
+        <button class="filter-btn" onclick="filterAssets('template', this)">Game Templates</button>
+        <button class="filter-btn" onclick="filterAssets('bundle', this)">Bundles</button>
+      </div>
+
+      <div class="grid-3" id="assetGrid">
+        
+        <!-- GAME SYSTEM: VHS Horror Template -->
+        <div class="card" data-category="system">
+          <div class="card-media">
+            <img src="assests/VHS_Horror_Template.png" alt="VHS Horror Template Preview">
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="card-badge">Game System</div>
+              <h3>VHS Horror Template</h3>
+              <p>A modular VHS horror framework designed for first-person horror games/projects. Built entirely using blueprints, this template provides a flexible foundation for game developers who want to create immersive, analog-style horror experiences.</p>
+              <div class="card-price">€7.50</div>
+              <ul class="card-features">
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a href="https://www.fab.com/listings/2c6cc012-3beb-48a5-a6fe-ad137538fcae" class="btn btn-primary">Get on Fab</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- GAME TEMPLATE 1: Day and Night Cycle Template -->
+        <div class="card" data-category="template">
+          <div class="card-media">
+            <img src="assests/Day_And_Night_Cycle.png" alt="Day and Night Cycle Template Preview">
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="card-badge">Game Template</div>
+              <h3>Day and Night Cycle Template</h3>
+              <p>A lightweight Day/Night cycle and day tracker framework built entirely using blueprints. This template offers a seamless, easily adaptable foundation for transitioning between day and night while tracking elapsed time and days.</p>
+              <div class="card-price">€3.20</div>
+              <ul class="card-features">
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a href="https://www.fab.com/listings/2bb8a1d3-9d33-4ae8-bc0a-4c3bbb523543" class="btn btn-primary">Get on Fab</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- GAME TEMPLATE 2: Interactive Security System Template -->
+        <div class="card" data-category="template">
+          <div class="card-media">
+            <img src="assests/Interactive_Security_System.png" alt="Interactive Security System Template Preview">
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="card-badge">Game Template</div>
+              <h3>Interactive Security System Template</h3>
+              <p>An interactive blueprint framework for managing security monitors and multi-camera systems. This template allows players to seamlessly switch between different live camera feeds and directly interact with a security monitor to survey their surroundings in real time.</p>
+              <div class="card-price">€2</div>
+              <ul class="card-features">
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a href="https://www.fab.com/listings/25c131f7-e850-4159-86c4-291fecb79af1" class="btn btn-primary">Get on Fab</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- GAME TEMPLATE 3: Interactive Door Kit Template -->
+        <div class="card" data-category="template">
+          <div class="card-media">
+            <img src="assests/Interactive_Door_Kit.png" alt="Interactive Door Kit Template Preview">
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="card-badge">Game Template</div>
+              <h3>Interactive Door Kit Template</h3>
+              <p>An easy-to-use, customizable interactive door framework built entirely in Blueprints. This template offers 8 different doors for your game, making it flexible and simple to implement.</p>
+              <div class="card-price">€3.20</div>
+              <ul class="card-features">
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a href="https://www.fab.com/listings/c900121a-fc36-49f3-8311-0b38bc1aeb60" class="btn btn-primary">Get on Fab</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- GAME TEMPLATE 4: Universal Niagara Effects Pack -->
+        <div class="card" data-category="template">
+          <div class="card-media">
+            <img src="assests/Universal_Niagra_Effects.png" alt="Universal Niagara Effects Pack Preview">
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="card-badge">Game Template</div>
+              <h3>Universal Niagara Effects Pack</h3>
+              <p>An easy-to-use, customizable Niagara VFX pack built entirely in Blueprints. This template offers 6 particle emitters and 7 atmospheric VFX, fully customizable and simple to implement.</p>
+              <div class="card-price">€3.20</div>
+              <ul class="card-features">
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a href="https://www.fab.com/listings/8cb6fd92-b7d7-484f-98e1-673b74dcbe20" class="btn btn-primary">Get on Fab</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- BUNDLE: Essential Systems and VFX Bundle -->
+        <div class="card" data-category="bundle">
+          <div class="card-media">
+            <img src="assests/Bundle.png" alt="Essential Systems and VFX Bundle Preview">
+          </div>
+          <div class="card-body">
+            <div>
+              <div class="card-badge">Bundle</div>
+              <h3>Essential Systems and VFX Bundle</h3>
+              <p>Power up your Unreal Engine projects with a complete, production-ready developer bundle. This kit combines high-performance visual effects, dynamic environment systems, interactive gameplay mechanics, and atmospheric post-processing into one seamless package.</p>
+              <div class="card-price">€10 <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">(Save €6)</span></div>
+              <ul class="card-features">
+              </ul>
+            </div>
+            <div class="card-actions">
+              <a href="https://www.fab.com/bundles/fd15038a-43e9-4d39-aaff-95f64348da40" class="btn btn-primary">Get Bundle</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Custom Asset Request Section -->
+    <section id="custom" class="custom-build-box reveal">
+      <div class="custom-header">
+        <h2 class="section-title">Request a Custom Asset Build</h2>
+        <p class="section-desc">Need a unique environment pack, complex Blueprint system, or custom music tracks? Fill out your specifications below.</p>
+      </div>
+
+      <form action="https://formsubmit.co/abnormalstudio2021@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New Custom Asset Request — Abnormal Studio">
+        <input type="hidden" name="_captcha" value="false">
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="name">Your Name / Studio Name</label>
+            <input type="text" name="name" id="name" placeholder="e.g. Alex" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" name="email" id="email" placeholder="alex@studio.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="assetType">Asset Type Needed</label>
+            <select name="assetType" id="assetType" required>
+              <option value="Game Systems (Blueprint Frameworks)">Game Systems (Blueprint Logic Frameworks)</option>
+              <option value="3D Modular Environments & Props">3D Modular Environments & Props</option>
+              <option value="Custom Game Music & Soundtracks">Custom Game Music & Soundtracks</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="budget">Target Budget (USD)</label>
+            <select name="budget" id="budget" required>
+              <option value="$150 – $300">$150 – $300</option>
+              <option value="$300 – $600">$300 – $600</option>
+              <option value="$600+">$600+</option>
+            </select>
+          </div>
+
+          <div class="form-group full">
+            <label for="details">Project Details & Requirements</label>
+            <textarea name="details" id="details" rows="4" placeholder="Describe the asset mechanics, visual/audio reference links, target engine version..." required></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label for="techSpecs">Technical Specifications Needed</label>
+            <input type="text" name="techSpecs" id="techSpecs" placeholder="e.g. Collisions, LODs, Enhanced Input, Commented Nodes...">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 16px; font-size: 0.95rem;">Submit Custom Asset Request</button>
+      </form>
+    </section>
+
+    <!-- 1-on-1 Dev Advice Section (Direct Email) -->
+    <section id="advice" style="margin-bottom: 80px;" class="reveal">
+      <h2 class="section-title">Paid Dev Advice & Coaching</h2>
+      <p class="section-desc">Stuck on system architecture, time management, or project scope?</p>
+
+          <div class="card" style="flex-direction: row; align-items: center; flex-wrap: wrap; gap: 24px; padding: 28px;">
+          <div style="flex: 1; min-width: 280px;">
+           <h3>1-on-1 Game Dev Advisory Call</h3>
+          <p>A focused 60-minute technical session. We review your UE5 Blueprint setup, resolve workflow bottlenecks, and cut scope so you can finish your game.</p>
+          <div class="card-price" style="margin-top: 8px; margin-bottom: 0;">€20 <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: normal;">/ session</span></div>
+          </div>
+          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; gap: 8px; text-align: center;">
+            <a href="mailto:abnormalstudio2021@gmail.com?subject=1-on-1%20Game%20Dev%20Advice%20Session" class="btn btn-primary" style="white-space: nowrap;">
+              Email Us Direct
+            </a>
+            <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">abnormalstudio2021@gmail.com</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison-section reveal">
+      <h2 class="section-title">Engineered for UE5 Production</h2>
+      <p class="section-desc">Designed to solve core indie development roadblocks.</p>
+
+      <div class="comp-grid">
+        <div class="comp-card">
+          <h4>Building Everything From Scratch</h4>
+          <ul>
+            <li>❌ Weeks spent debugging interaction nodes</li>
+            <li>❌ Time lost setting up post-processing & VFX</li>
+            <li>❌ Scope creep delays project launch</li>
+          </ul>
+        </div>
+        <div class="comp-card">
+          <h4>Using Abnormal Studio Assets</h4>
+          <ul>
+            <li>✓ Plug-and-play UE5 framework logic</li>
+            <li>✓ Modular and simple to use</li>
+            <li>✓ Focus on atmosphere and gameplay flow</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Quick Spec Modal -->
+  <div class="modal-overlay" id="specModal" onclick="handleBackdropClick(event, 'specModal')">
+    <div class="modal">
+      <button class="modal-close" onclick="closeSpecModal()">&times;</button>
+      <h3 id="modalTitle" style="margin-bottom: 8px;">Asset Title</h3>
+      <div id="modalPrice" class="card-price" style="margin-top: 0;">$0</div>
+      <p id="modalSpecs" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px;">Asset technical specs go here...</p>
+      <button onclick="closeSpecModal()" class="btn btn-primary" style="width: 100%;">Close Preview</button>
+    </div>
+  </div>
+
+  <footer class="container">
+    <div>&copy; 2026 Abnormal Studio</div>
+    <div>
+    <a href="https://www.fab.com/sellers/Abnormal_Studio" class="fab-link">FAB Store</a>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth Filter Functionality with Scale/Fade Animations
+    function filterAssets(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cards = document.querySelectorAll('#assetGrid .card');
+      cards.forEach(card => {
+        const matches = category === 'all' || card.dataset.category === category;
+        
+        if (matches) {
+          card.style.display = 'flex';
+          setTimeout(() => card.classList.remove('hide-card'), 10);
+        } else {
+          card.classList.add('hide-card');
+          setTimeout(() => {
+            if (card.classList.contains('hide-card')) {
+              card.style.display = 'none';
+            }
+          }, 300);
+        }
+      });
+    }
+
+    // Scroll Reveal Observer
+    const observerOptions = {
+      root: null,
+      threshold: 0.15
+    };
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Spec Modal Functions
+    function openSpecModal(title, price, specs) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalPrice').innerText = price;
+      document.getElementById('modalSpecs').innerText = specs;
+      document.getElementById('specModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSpecModal() {
+      document.getElementById('specModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function handleBackdropClick(e, modalId) {
+      if (e.target.id === modalId) {
+        if (modalId === 'specModal') closeSpecModal();
+      }
+    }
+  </script>
+</body>
+</html>
