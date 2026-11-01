@@ -751,59 +751,31 @@
       </div>
     </section>
 
-    <!-- Custom Asset Request Section -->
-    <section id="custom" class="custom-build-box reveal">
-      <div class="custom-header">
+<!-- Custom Asset Request Section (Direct Text Specs) -->
+    <section id="custom" class="custom-build-box reveal" style="text-align: center;">
+      <div class="custom-header" style="max-width: 680px; margin: 0 auto 32px auto;">
         <h2 class="section-title">Request a Custom Asset Build</h2>
-        <p class="section-desc">Need a unique environment pack, complex Blueprint system, or custom music tracks? Fill out your specifications below.</p>
+        <p class="section-desc" style="margin-bottom: 16px;">Need a unique environment pack, complex Blueprint system, or custom music tracks? Copy the template below and email it to us directly.</p>
+        <div style="display: inline-block; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); padding: 8px 16px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-main);">
+         Note: We exclusively build and develop for <strong style="color: #ffffff;">UE 4.27</strong> and <strong style="color: #ffffff;">UE 5+</strong>.
+        </div>
       </div>
 
-      <form action="https://formsubmit.co/abnormalstudio2021@gmail.com" method="POST">
-        <input type="hidden" name="_subject" value="New Custom Asset Request — Abnormal Studio">
-        <input type="hidden" name="_captcha" value="false">
+      <div style="background: #000000; border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin: 0 auto 28px auto; max-width: 720px; font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); line-height: 1.8; text-align: left; user-select: all;">
+        <span style="color: var(--text-main);">Your Name / Studio Name:</span> [Enter name]<br>
+        <span style="color: var(--text-main);">Asset Type Needed:</span> [Game Systems / 3D Environments / Game Music]<br>
+        <span style="color: var(--text-main);">Target Engine:</span> [UE 4.27 or UE 5+]<br>
+        <span style="color: var(--text-main);">Target Budget (USD):</span> [$150–$300 / $300–$600 / $600+]<br>
+        <span style="color: var(--text-main);">Project Details & Requirements:</span> [Describe mechanics, references]<br>
+        <span style="color: var(--text-main);">Technical Specifications:</span> [Collisions, LODs, Enhanced Input, etc.]
+      </div>
 
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="name">Your Name / Studio Name</label>
-            <input type="text" name="name" id="name" placeholder="e.g. Alex" required>
-          </div>
-
-          <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" name="email" id="email" placeholder="alex@studio.com" required>
-          </div>
-
-          <div class="form-group">
-            <label for="assetType">Asset Type Needed</label>
-            <select name="assetType" id="assetType" required>
-              <option value="Game Systems (Blueprint Frameworks)">Game Systems (Blueprint Logic Frameworks)</option>
-              <option value="3D Modular Environments & Props">3D Modular Environments & Props</option>
-              <option value="Custom Game Music & Soundtracks">Custom Game Music & Soundtracks</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="budget">Target Budget (USD)</label>
-            <select name="budget" id="budget" required>
-              <option value="$150 – $300">$150 – $300</option>
-              <option value="$300 – $600">$300 – $600</option>
-              <option value="$600+">$600+</option>
-            </select>
-          </div>
-
-          <div class="form-group full">
-            <label for="details">Project Details & Requirements</label>
-            <textarea name="details" id="details" rows="4" placeholder="Describe the asset mechanics, visual/audio reference links, target engine version..." required></textarea>
-          </div>
-
-          <div class="form-group full">
-            <label for="techSpecs">Technical Specifications Needed</label>
-            <input type="text" name="techSpecs" id="techSpecs" placeholder="e.g. Collisions, LODs, Enhanced Input, Commented Nodes...">
-          </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 16px; font-size: 0.95rem;">Submit Custom Asset Request</button>
-      </form>
+      <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; gap: 12px; text-align: center;">
+        <a href="mailto:abnormalstudio2021@gmail.com?subject=Custom%20Asset%20Request%20—%20Abnormal%20Studio" class="btn btn-primary" style="white-space: nowrap; padding: 16px 32px; font-size: 1rem; width: 100%; max-width: 360px;">
+          Email Us Direct
+        </a>
+        <span style="font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-mono);">abnormalstudio2021@gmail.com</span>
+      </div>
     </section>
 
     <!-- 1-on-1 Dev Advice Section (Direct Email) -->
